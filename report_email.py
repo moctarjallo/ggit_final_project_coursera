@@ -29,4 +29,4 @@ def send(message):
     """Send message to the configured SMTP server"""
     mail_server = smtplib.SMTP('localhost')
     mail_server.send_message(message)
-    mail_server.quit()
+    mail_server.quit()    

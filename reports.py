@@ -5,10 +5,10 @@ from reportlab.platypus import Paragraph, Spacer, Table, Image
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 
-def generate(filename, title, data):
+def generate(attachement='/tmp/processed.pdf', title="Processed Update on ", data=None):
     title = title + date.today().strftime("%d-%m-%Y")
     styles = getSampleStyleSheet()
-    report = SimpleDocTemplate(filename)
+    report = SimpleDocTemplate(attachement)
     report_title = Paragraph(title, styles["h1"])
     report_body = [report_title]
     for item in data:
@@ -17,5 +17,4 @@ def generate(filename, title, data):
         empty_line = Spacer(1, 20)
         report_body.extend([empty_line, report_data])
     report.build(report_body)
-
-
+    
