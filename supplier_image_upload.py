@@ -1,31 +1,13 @@
-#! /usr/bin/env python3
-
+#!/usr/bin/env python3
 import requests
 import os
 
-DESCRIPTIONS_DIR="supplier-data/descriptions/"
+# This example shows how a file can be uploaded using
+# The Python Requests module
 
-def parse_text(file):
-  data = dict()
-  data["image_name"] = file.split('.')[0]+'.jpeg'
-  with open(os.path.join(DESCRIPTIONS_DIR, file)) as f:
-    fields = f.readlines()
-    data['name'] = fields[0].strip()
-    data['weight'] = int(fields[1].split(' ')[0])
-    data['description'] = fields[2].strip()
-  return data
+from changeImage import IMAGES_DIR, get_source_images
 
-def post_description(data):
-  url = "http://34.67.154.109/fruits/"
-  r = requests.post(url, data=data)
-  print(r.status_code)
-
-if __name__ == '__main__':
-  for description_file in os.listdir(DESCRIPTIONS_DIR):
-    #print(descriptions_files)
-
-    #description_file = descriptions_files[0]
-    description_data = parse_text(description_file)
-    #print(description_data)
-
-    post_description(description_data)
+url = "http://localhost/upload/"
+for source_image in get_source_images(ext='.jpeg'):
+  with open(os.path.join(IMAGES_DIR, source_image), 'rb') as opened:
+    r = requests.post(url, files={'file': opened})
