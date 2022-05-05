@@ -1,32 +1,16 @@
-#! /usr/bin/env python3
+import os
 
-import email.message
-import mimetypes
-import os.path
-import smtplib
+import reports
+import run
+import emails
 
-def generate(sender, recipient, subject, body, attachement_path):
-    """Create an email with an attachement"""
-    # Basic email formatting
-    message = email.message.EmailMessage()
-    message["From"] = sender
-    message["To"] = recipient
-    message["Subject"] = subject
-    message.set_content(body)
+DESCRIPTIONS_DIR="supplier-data/descriptions/"
 
-    # Process the attachement and add it to the email
-    attachement_filename = os.path.basename(attachement_path)
-    mime_type, _ = mimetypes.guess_type(attachement_filename)
-    mime_type, mime_subtype = mime_type.split('/', 1)
-    with open(attachement_filename, 'rb') as ap:
-        message.add_attachment(ap.read(),
-                               maintype=mime_type,
-                               subtype=mime_subtype,
-                               filename=attachement_filename)
-    return message
-
-def send(message):
-    """Send message to the configured SMTP server"""
-    mail_server = smtplib.SMTP('localhost')
-    mail_server.send_message(message)
-    mail_server.quit()    
+if __name__ == '__main__':
+    paragraph = [run.parse_text(description_file) for description_file in os.listdir(DESCRIPTIONS_DIR)]
+    reports.generate_report(attachment='/tmp/processed.pdf', title="Processed Update on ", paragraph=paragraph)
+    message = emails.generate_email(sender="automation@example.com",
+                                    recipient="student-00-7132de281614@example.com",
+                                    subject="Upload Completed - Online Fruit Store",
+                                    body="All fruits are uploaded to our website successfully. A detailed list is attached to this email.",
+                                    attachement_path='/tmp/processed.pdf')
