@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import os
+import requests
 
 DESCRIPTIONS_DIR="supplier-data/descriptions/"
 
@@ -14,10 +15,16 @@ def parse_text(file):
     data['description'] = fields[2].strip()
   return data
 
-if __name__ == '__main__':
-  descriptions_files = os.listdir(DESCRIPTIONS_DIR)
-  #print(descriptions_files)
+def post_description(data):
+  url = "http://35.239.247.152/fruits/"
+  r = requests.post(url, data=data)
+  print(r.status_code)
 
-  description_file = descriptions_files[0]
-  description_data = parse_text(description_file)
-  print(description_data)
+if __name__ == '__main__':
+  for description_file in os.listdir(DESCRIPTIONS_DIR):
+    #print(descriptions_files)
+
+    #description_file = descriptions_files[0]
+    description_data = parse_text(description_file)
+    #print(description_data)
+    post_description(description_data)
