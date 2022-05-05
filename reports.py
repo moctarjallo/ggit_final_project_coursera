@@ -1,11 +1,12 @@
 #! /usr/bin/env python3
+
 from datetime import date
 from reportlab.platypus import SimpleDocTemplate
 from reportlab.platypus import Paragraph, Spacer, Table, Image
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 
-def generate(attachement='/tmp/processed.pdf', title="Processed Update on ", data=None):
+def generate_report(attachement='/tmp/processed.pdf', title="Processed Update on ", data=None):
     title = title + date.today().strftime("%d-%m-%Y")
     styles = getSampleStyleSheet()
     report = SimpleDocTemplate(attachement)
