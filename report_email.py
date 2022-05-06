@@ -10,7 +10,8 @@ import emails
 DESCRIPTIONS_DIR="supplier-data/descriptions/"
 
 def process_data(data):
-    return ["name: {}<br/>weight: {}\n".format(item[0], item[1]) for item in data]
+    data = ["name: {}<br/>weight: {}\n".format(item['name'], item['weight']) for item in data]
+    return '<br/><br/>'.join(data)
 
 if __name__ == '__main__':
     # Build report 
@@ -18,7 +19,7 @@ if __name__ == '__main__':
     paragraph = process_data(paragraph_data)
     title = "Processed Update on {}\n".format(date.today().strftime("%B %d, %Y"))
     attachement='/tmp/processed.pdf'
-    reports.generate_report(attachement, title, paragraph)
+    reports.generate_report('processed.pdf', title, paragraph)
 
     # Build and send message
     message = emails.generate_email(sender="automation@example.com",
