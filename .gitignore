@@ -1,6 +1,8 @@
 ./tests.py
 *.pdf
 *.txt
+*.ttf
+*.jpeg
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
