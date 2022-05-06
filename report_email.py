@@ -10,7 +10,7 @@ import emails
 DESCRIPTIONS_DIR="supplier-data/descriptions/"
 
 def process_data(data):
-    data = ["name: {}<br/>weight: {}\n".format(item['name'], item['weight']) for item in data]
+    data = ["name: {}<br/>weight: {} lbs\n".format(item['name'], item['weight']) for item in data]
     return '<br/><br/>'.join(data)
 
 if __name__ == '__main__':
